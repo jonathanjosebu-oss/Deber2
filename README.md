@@ -1,4 +1,4 @@
-# RBackpropagation con descenso de gradiente hasta 20000 epocas
+# Backpropagation con descenso de gradiente hasta 20000 épocas
 
 Este proyecto implementa manualmente una red neuronal para aprender la
 compuerta XOR. La arquitectura tiene dos entradas, dos neuronas ocultas y una
@@ -6,7 +6,7 @@ salida sigmoide.
 
 ## Grafo de nodos
 
-mermaid
+```mermaid
 flowchart LR
 	x1[Entrada x1] --> h1[Neurona oculta h1]
 	x1 --> h2[Neurona oculta h2]
@@ -14,6 +14,7 @@ flowchart LR
 	x2 --> h2
 	h1 --> y[Salida XOR]
 	h2 --> y
+```
 
 
 La red utiliza 9 parámetros entrenables: cuatro pesos y un sesgo por cada
