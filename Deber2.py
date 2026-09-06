@@ -76,6 +76,7 @@ class Value:
         output = Value(sigmoid_value, (self,), "sigmoid")
 
         def backward():
+            # La derivada de la sigmoide es s(x) * (1 - s(x)).
             self.grad += sigmoid_value * (1.0 - sigmoid_value) * output.grad
 
         output._backward = backward
@@ -103,6 +104,7 @@ class Value:
                     build_topology(child)
                 topology.append(value)
 
+        # Ordena el grafo para aplicar la regla de la cadena desde la salida.
         build_topology(self)
         self.grad = 1.0
         for value in reversed(topology):
@@ -111,6 +113,7 @@ class Value:
 
 def binary_cross_entropy(prediction, target):
     """L = -(y log(y_pred) + (1-y) log(1-y_pred))."""
+    # Mide la diferencia entre la prediccion y el objetivo esperado.
     target_value = target if isinstance(target, Value) else Value(target)
     return -(target_value * prediction.log() + (1.0 - target_value) * (1.0 - prediction).log())
 
@@ -124,6 +127,7 @@ class Neuron:
         self.bias = Value(random_generator.uniform(-1.0, 1.0))
 
     def __call__(self, inputs):
+        # Combina entradas, pesos y bias, y aplica la activacion sigmoide.
         weighted_sum = sum(
             (weight * value for weight, value in zip(self.weights, inputs)),
             self.bias,
@@ -176,6 +180,7 @@ def main():
     epochs = 20_000
 
     for epoch in range(epochs):
+        # Forward pass: calcula una prediccion para cada entrada XOR.
         predictions = [network(row) for row in inputs]
         losses = [
             binary_cross_entropy(prediction, target)
@@ -183,10 +188,14 @@ def main():
         ]
         loss = sum(losses) / len(losses)
 
+        # Reinicia los gradientes antes de cada nueva retropropagacion.
         for parameter in parameters:
             parameter.grad = 0.0
+
+        # Backward pass: propaga la perdida y calcula los gradientes.
         loss.backward()
 
+        # Descenso de gradiente: actualiza pesos y bias de la red.
         for parameter in parameters:
             parameter.data -= learning_rate * parameter.grad
 
