@@ -1,4 +1,4 @@
-# Red neuronal XOR con backpropagation
+# RBackpropagation con descenso de gradiente hasta 20000 epocas
 
 Este proyecto implementa manualmente una red neuronal para aprender la
 compuerta XOR. La arquitectura tiene dos entradas, dos neuronas ocultas y una
@@ -27,6 +27,16 @@ Configuración utilizada:
 - Épocas: `20 000`
 - Tasa de aprendizaje: `1.0`
 - Pérdida final: `0.000475`
+
+### Resultado humanizado
+
+Con esta configuración, la red neuronal necesitó como mínimo **365 épocas**
+para aprender la lógica XOR y clasificar correctamente las cuatro
+combinaciones de entrada. En ese punto, sus salidas fueron aproximadamente
+`0.153`, `0.680`, `0.697` y `0.499`, que corresponden a las clases `0`, `1`,
+`1` y `0`. Aunque la red ya acertaba desde la época 365, se mantuvo el
+entrenamiento hasta las `20 000` épocas para refinar las predicciones y reducir
+la pérdida final a `0.000475`.
 
 | Entrada | Salida calculada | Clase predicha | Objetivo |
 | --- | ---: | ---: | ---: |
